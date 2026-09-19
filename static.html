@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>古文今讀 1–5 課　虛字整理與選擇題</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2a1f; --muted: #6b7280; --accent: #385723; --accent-bg: #e2efda;
+    --line: #a6a6a6; --row: #f7f7f7; --hl: #c00000; --blue: #ddebf7; --orange: #fce4d6;
+    --ok: #2e7d32; --ok-bg: #e3f2e1; --bad: #c62828; --bad-bg: #fdeaea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161a16; --fg: #e8ece8; --muted: #9aa39a; --accent: #a9d18e; --accent-bg: #253323;
+      --line: #4a544a; --row: #1e241e; --hl: #ff8a80; --blue: #1f3040; --orange: #40291f;
+      --ok: #81c784; --ok-bg: #1f3a21; --bad: #ef9a9a; --bad-bg: #3f2222;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: "DFKai-SB", "BiauKai", "標楷體", "Noto Serif TC", "Songti TC", serif;
+    font-size: 17px; line-height: 1.7;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { text-align: center; color: var(--accent); font-size: 1.9rem; margin: 8px 0 2px; }
+  .subtitle { text-align: center; font-size: 1.35rem; font-weight: bold; margin: 0 0 6px; }
+  .lessons-line, .legend { text-align: center; color: var(--muted); font-size: .85rem; margin: 2px 0; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0 6px; }
+  nav.toc a {
+    text-decoration: none; color: var(--accent); background: var(--accent-bg);
+    padding: 4px 12px; border-radius: 999px; font-size: .9rem;
+  }
+  h2 {
+    color: var(--accent); font-size: 1.45rem; margin: 28px 0 10px; padding-bottom: 2px;
+    border-bottom: 2px solid #548235; scroll-margin-top: 12px;
+  }
+  h3 { font-size: 1.1rem; margin: 16px 0 6px; }
+  h3.lesson { background: var(--accent-bg); color: var(--accent); padding: 4px 10px; border-radius: 4px; margin-top: 22px; }
+  h3.lesson small { font-weight: normal; color: var(--muted); font-size: .8rem; }
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid var(--line); padding: 5px 10px; vertical-align: middle; }
+  table.meaning thead th { background: var(--accent-bg); text-align: center; font-size: .95rem; }
+  table.meaning.blue thead th { background: var(--blue); }
+  table.meaning.orange thead th { background: var(--orange); }
+  table.meaning tbody th { background: var(--row); width: 9.5em; text-align: center; font-size: .95rem; white-space: nowrap; }
+  .ex { font-size: .98rem; padding: 1px 0; }
+  .src { color: var(--muted); font-size: .75rem; margin-left: .3em; }
+  .hl { color: var(--hl); font-weight: bold; }
+  .note { font-size: .95rem; margin: 8px 0; }
+  .infoline { text-align: center; margin: 6px 0 10px; }
+  .printonly { display: none; }
+  .bar {
+    position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+    background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 0; margin: 10px 0 0;
+    font-family: system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; font-size: .88rem;
+  }
+  .bar .modes { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .bar button { font: inherit; color: var(--fg); background: var(--bg); border: 0; padding: 6px 12px; cursor: pointer; }
+  .bar .seg.on { background: var(--accent); color: var(--bg); }
+  .bar .stats { flex: 1 1 auto; min-width: 9em; }
+  .bar .acts { display: inline-flex; gap: 6px; }
+  .bar .act { border: 1px solid var(--line); border-radius: 8px; }
+  .bar .act#submit { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .bar button:focus-visible, button.opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.opt {
+    width: 100%; text-align: left; font: inherit; color: inherit; background: transparent; cursor: pointer;
+    border: 1px solid transparent; border-radius: 8px; padding: 3px 8px; margin: 1px 0; line-height: 1.6;
+  }
+  button.opt:hover { background: var(--accent-bg); }
+  button.opt.sel { background: var(--accent-bg); border-color: var(--accent); }
+  button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
+  button.opt.wrong { background: var(--bad-bg); border-color: var(--bad); }
+  button.opt .mark { margin-left: .4em; font-weight: bold; font-family: system-ui, sans-serif; }
+  button.opt.right .mark { color: var(--ok); }
+  button.opt.wrong .mark { color: var(--bad); }
+  li.q.done button.opt { cursor: default; }
+  li.q.done button.opt:hover:not(.right):not(.wrong) { background: transparent; }
+  .exp { margin: 4px 0 0 2.4em; padding: 6px 10px; border-radius: 8px; background: var(--row); font-size: .93rem; line-height: 1.6; }
+  .exp .res { margin-right: .5em; font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; }
+  .exp.ok .res { color: var(--ok); }
+  .exp.no .res { color: var(--bad); }
+  .sec-score { font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; font-size: .9rem; color: var(--muted); margin: 4px 0 0; }
+
+  .rule { font-weight: bold; margin: 8px 0; }
+  ol.qs { list-style: none; counter-reset: q; padding: 0; margin: 0; }
+  li.q { counter-increment: q; margin: 10px 0 14px; break-inside: avoid; page-break-inside: avoid; }
+  li.q .stem::before { content: "（　　）" counter(q) ". "; white-space: pre; }
+  li.q .stem { padding-left: 0; }
+  ul.opts { list-style: none; margin: 2px 0 0 2.4em; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 1em; }
+  ul.opts.one { grid-template-columns: 1fr; }
+  ul.opts .lab { margin-right: .2em; }
+  u { text-underline-offset: 3px; }
+  details.answers { margin-top: 10px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; }
+  details.answers > summary { cursor: pointer; font-weight: bold; color: var(--accent); font-size: 1.05rem; padding: 4px 0; }
+  table.key thead th { background: var(--accent-bg); }
+  table.key td.c { text-align: center; white-space: nowrap; }
+  table.key td.ans { color: var(--hl); font-weight: bold; }
+  table.key { font-size: .95rem; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 36px; }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    ul.opts { grid-template-columns: 1fr; margin-left: 1.6em; }
+    .exp { margin-left: 1.6em; }
+    .bar .stats { flex-basis: 100%; order: 3; }
+    table.meaning tbody th { width: 6.5em; white-space: normal; }
+  }
+  @media print {
+    body { font-size: 12pt; }
+    main { max-width: none; padding: 0; }
+    nav.toc, .bar, .exp, .sec-score { display: none !important; }
+    .printonly { display: block; }
+    button.opt { border: 0; padding: 0; }
+    h2.newpage { page-break-before: always; }
+    h2, h3 { page-break-after: avoid; }
+    tr { page-break-inside: avoid; }
+    .tablewrap { overflow: visible; }
+    details.answers { border: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>古文今讀 第 1–5 課</h1>
+  <p class="subtitle">虛字整理：之、為、於、謝、悉</p>
+  <p class="lessons-line">第1課 文徵明習字　第2課 子罕辭寶　第3課 口蜜腹劍　第4課 范公為參政　第5課 薛譚學謳</p>
+  <p class="legend">出處：課外補充＝不在課本內的補充例句；簡報＝老師簡報例句；課本標註＝課本旁註所列</p>
+  <p class="legend">講義版（與 Word 檔相同，適合閱讀與列印）｜<a href="./">前往互動版</a></p>
+  <nav class="toc" aria-label="目錄">
+    <a href="#handout">虛字整理</a>
+    <a href="#practice">虛字練習</a>
+    <a href="#lessonqs">課文選擇題</a>
+    <a href="#answers">參考答案</a>
+  </nav>
+
+
+
+
+  <section id="handout">
+    <h2 id="h-zhi">一、之</h2>
+    <div class="tablewrap"><table class="meaning ">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">助詞，的</th><td><div class="ex">秦青<span class="hl">「之」</span>技<span class="src">（第5課）</span></div><div class="ex">文學<span class="hl">「之」</span>士<span class="src">（第3課）</span></div></td></tr>
+<tr><th scope="row">助詞，無意義</th><td><div class="ex">久<span class="hl">「之」</span>，目似瞑；頃<span class="hl">「之」</span>，一狼洞其中<span class="src">（課外補充）</span></div></td></tr>
+<tr><th scope="row">動詞，到</th><td><div class="ex">送孟浩然<span class="hl">「之」</span>廣陵<span class="src">（課外補充）</span></div><div class="ex">吾欲<span class="hl">「之」</span>南海<span class="src">（課外補充）</span></div></td></tr>
+<tr><th scope="row">代詞</th><td><div class="ex">故敢獻<span class="hl">「之」</span>（指玉）<span class="src">（第2課）</span></div><div class="ex">必再三易<span class="hl">「之」</span>（指書信）<span class="src">（第1課）</span></div><div class="ex">而陰陷<span class="hl">「之」</span><span class="src">（第3課）</span></div><div class="ex">遂悉罷<span class="hl">「之」</span><span class="src">（第4課）</span></div><div class="ex">自謂盡<span class="hl">「之」</span>（指技能）<span class="src">（第5課）</span></div></td></tr>
+</tbody></table></div>
+    <p class="note">延伸：「諸」＝「之」＋「於」，如「獻<span class="hl">諸</span>子罕」（第2課）。</p>
+
+    <h2>二、為</h2>
+    <h3>（一）讀ㄨㄟˊ</h3>
+    <div class="tablewrap"><table class="meaning blue">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">擔任，動詞</th><td><div class="ex">李林甫<span class="hl">「為」</span>相<span class="src">（第3課）</span></div><div class="ex">范公<span class="hl">「為」</span>參政<span class="src">（第4課）</span></div><div class="ex">子路<span class="hl">「為」</span>武城宰<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">當作，動詞</th><td><div class="ex">指鹿<span class="hl">「為」</span>馬<span class="src">（簡報）</span></div><div class="ex">以從草<span class="hl">「為」</span>林<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">是，動詞</th><td><div class="ex">失敗<span class="hl">「為」</span>成功之母<span class="src">（簡報）</span></div><div class="ex">助人<span class="hl">「為」</span>快樂之母<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">行、做，動詞</th><td><div class="ex">事在人<span class="hl">「為」</span><span class="src">（簡報）</span></div><div class="ex"><span class="hl">「為」</span>善最樂<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">治理，動詞</th><td><div class="ex"><span class="hl">「為」</span>政以德<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">堆積，動詞</th><td><div class="ex">譬如<span class="hl">「為」</span>山<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">被，介詞</th><td><div class="ex">梅花<span class="hl">「為」</span>寒所勒<span class="src">（簡報）</span></div><div class="ex">及<span class="hl">「為」</span>上所厚<span class="src">（第3課）</span></div><div class="ex">二蟲盡<span class="hl">「為」</span>所吞<span class="src">（簡報）</span></div></td></tr>
+</tbody></table></div>
+    <h3>（二）讀ㄨㄟˋ</h3>
+    <div class="tablewrap"><table class="meaning orange">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">替、給，介詞</th><td><div class="ex"><span class="hl">「為」</span>民服務<span class="src">（簡報）</span></div><div class="ex">蓬門今始<span class="hl">「為」</span>君開<span class="src">（簡報）</span></div><div class="ex"><span class="hl">「為」</span>人作嫁<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">與、同，介詞</th><td><div class="ex">道不同不相<span class="hl">「為」</span>謀<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">因為，介詞</th><td><div class="ex">項<span class="hl">「為」</span>之強<span class="src">（第3課）</span></div><div class="ex"><span class="hl">「為」</span>之怡然稱快<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">對、向，介詞</th><td><div class="ex">此中人語云，不足<span class="hl">「為」</span>外人道也<span class="src">（簡報）</span></div></td></tr>
+<tr><th scope="row">表目的，介詞</th><td><div class="ex"><span class="hl">「為」</span>國增光<span class="src">（簡報）</span></div><div class="ex"><span class="hl">「為」</span>正義而戰<span class="src">（簡報）</span></div></td></tr>
+</tbody></table></div>
+    <p class="note">成語：「指鹿為馬」比喻混淆是非、顛倒是非；「為人作嫁」（為別人作嫁衣裳）比喻徒然為他人辛苦。</p>
+
+    <h2>三、於</h2>
+    <div class="tablewrap"><table class="meaning ">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">對於</th><td><div class="ex">平生<span class="hl">「於」</span>書<span class="src">（第1課）</span></div></td></tr>
+<tr><th scope="row">向</th><td><div class="ex">學謳<span class="hl">「於」</span>秦青<span class="src">（第5課）</span></div></td></tr>
+<tr><th scope="row">在</th><td><div class="ex">餞<span class="hl">「於」</span>郊衢<span class="src">（第5課）</span></div></td></tr>
+<tr><th scope="row">比</th><td><div class="ex">苛政猛<span class="hl">「於」</span>虎<span class="src">（課本標註）</span></div></td></tr>
+<tr><th scope="row">給</th><td><div class="ex">己所不欲，勿施<span class="hl">「於」</span>人<span class="src">（課本標註）</span></div></td></tr>
+<tr><th scope="row">被</th><td><div class="ex">見笑<span class="hl">「於」</span>大方之家<span class="src">（課外補充）</span></div></td></tr>
+</tbody></table></div>
+
+    <h2>四、謝</h2>
+    <div class="tablewrap"><table class="meaning ">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">拒絕</th><td><div class="ex">閉門<span class="hl">「謝」</span>客<span class="src">（課本標註）</span></div><div class="ex">敬<span class="hl">「謝」</span>不敏<span class="src">（課本標註）</span></div></td></tr>
+<tr><th scope="row">賠罪、道歉</th><td><div class="ex">薛譚乃<span class="hl">「謝」</span>求反<span class="src">（第5課）</span></div><div class="ex"><span class="hl">「謝」</span>罪<span class="src">（課本標註）</span></div></td></tr>
+</tbody></table></div>
+
+    <h2>五、悉</h2>
+    <div class="tablewrap"><table class="meaning ">
+<thead><tr><th>意義（詞性）</th><th>例句（出處）</th></tr></thead>
+<tbody>
+<tr><th scope="row">全部（副詞）</th><td><div class="ex">遂<span class="hl">「悉」</span>罷之<span class="src">（第4課）</span></div></td></tr>
+<tr><th scope="row">同義字比較</th><td><div class="ex">舉州皆謂燈為火：<span class="hl">「舉」</span>＝全<span class="src">（課本第11頁）</span></div><div class="ex">竟月無雨：<span class="hl">「竟」</span>＝整個<span class="src">（課本第94頁）</span></div></td></tr>
+</tbody></table></div>
+  </section>
+
+  <section id="practice">
+    <h2 class="newpage">古文今讀 1–5 課　虛字練習</h2>
+    <p class="infoline">班級：＿＿＿＿　座號：＿＿＿＿　姓名：＿＿＿＿＿＿　　得分：＿＿＿＿</p>
+    <p class="rule">選擇題（每題 5 分，共 100 分）。粗體加底線的字為題目所問的字。</p>
+    <ol class="qs">
+<li class="q"><div class="stem">下列「之」字，何者與「秦青<u><b>之</b></u>技」的「之」用法相同（助詞，的）？</div><ul class="opts"><li><span class="lab">(A)</span> 故敢獻<u><b>之</b></u></li><li><span class="lab">(B)</span> 文學<u><b>之</b></u>士</li><li><span class="lab">(C)</span> 遂悉罷<u><b>之</b></u></li><li><span class="lab">(D)</span> 而陰陷<u><b>之</b></u></li></ul></li>
+<li class="q"><div class="stem">下列「之」字，何者是代詞？</div><ul class="opts"><li><span class="lab">(A)</span> 未窮秦青<u><b>之</b></u>技</li><li><span class="lab">(B)</span> 文學<u><b>之</b></u>士</li><li><span class="lab">(C)</span> 必再三易<u><b>之</b></u></li><li><span class="lab">(D)</span> 送孟浩然<u><b>之</b></u>廣陵</li></ul></li>
+<li class="q"><div class="stem">下列「之」字，何者與「送孟浩然<u><b>之</b></u>廣陵」的「之」用法相同（動詞，到）？</div><ul class="opts"><li><span class="lab">(A)</span> 蜀<u><b>之</b></u>鄙有二僧</li><li><span class="lab">(B)</span> 久<u><b>之</b></u>，目似瞑</li><li><span class="lab">(C)</span> 故敢獻<u><b>之</b></u></li><li><span class="lab">(D)</span> 吾欲<u><b>之</b></u>南海</li></ul></li>
+<li class="q"><div class="stem">下列哪一句的「之」是助詞，且無意義（湊足音節）？</div><ul class="opts"><li><span class="lab">(A)</span> 故敢獻<u><b>之</b></u></li><li><span class="lab">(B)</span> 頃<u><b>之</b></u>，一狼洞其中</li><li><span class="lab">(C)</span> 必再三易<u><b>之</b></u></li><li><span class="lab">(D)</span> 未窮秦青<u><b>之</b></u>技</li></ul></li>
+<li class="q"><div class="stem">下列「為」字，何者與「李林甫<u><b>為</b></u>相」的「為」意思相同（擔任）？</div><ul class="opts"><li><span class="lab">(A)</span> 子路<u><b>為</b></u>武城宰</li><li><span class="lab">(B)</span> 事在人<u><b>為</b></u></li><li><span class="lab">(C)</span> 梅花<u><b>為</b></u>寒所勒</li><li><span class="lab">(D)</span> 蓬門今始<u><b>為</b></u>君開</li></ul></li>
+<li class="q"><div class="stem">「蓬門今始<u><b>為</b></u>君開」的「為」，讀音與意義何者正確？</div><ul class="opts"><li><span class="lab">(A)</span> ㄨㄟˊ，擔任</li><li><span class="lab">(B)</span> ㄨㄟˊ，被</li><li><span class="lab">(C)</span> ㄨㄟˋ，替、給</li><li><span class="lab">(D)</span> ㄨㄟˋ，因為</li></ul></li>
+<li class="q"><div class="stem">下列「為」字，何者讀作ㄨㄟˋ？</div><ul class="opts"><li><span class="lab">(A)</span> <u><b>為</b></u>民服務</li><li><span class="lab">(B)</span> 指鹿<u><b>為</b></u>馬</li><li><span class="lab">(C)</span> <u><b>為</b></u>政以德</li><li><span class="lab">(D)</span> 助人<u><b>為</b></u>快樂之母</li></ul></li>
+<li class="q"><div class="stem">下列「為」字，何者與「梅花<u><b>為</b></u>寒所勒」的「為」意思相同（被）？</div><ul class="opts"><li><span class="lab">(A)</span> <u><b>為</b></u>善最樂</li><li><span class="lab">(B)</span> 項<u><b>為</b></u>之強</li><li><span class="lab">(C)</span> 譬如<u><b>為</b></u>山</li><li><span class="lab">(D)</span> 及<u><b>為</b></u>上所厚</li></ul></li>
+<li class="q"><div class="stem">「道不同不相<u><b>為</b></u>謀」與「項<u><b>為</b></u>之強」兩句的「為」，意思依序是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 與、同；因為</li><li><span class="lab">(B)</span> 替、給；被</li><li><span class="lab">(C)</span> 擔任；因為</li><li><span class="lab">(D)</span> 與、同；替</li></ul></li>
+<li class="q"><div class="stem">下列各組「為」字，何者意思相同？</div><ul class="opts one"><li><span class="lab">(A)</span> <u><b>為</b></u>政以德／子游<u><b>為</b></u>武城宰</li><li><span class="lab">(B)</span> 事在人<u><b>為</b></u>／<u><b>為</b></u>善最樂</li><li><span class="lab">(C)</span> <u><b>為</b></u>別人作嫁衣裳／二蟲盡<u><b>為</b></u>所吞</li><li><span class="lab">(D)</span> 道不同不相<u><b>為</b></u>謀／<u><b>為</b></u>國增光</li></ul></li>
+<li class="q"><div class="stem">「<u><b>為</b></u>別人作嫁衣裳」這句話用來比喻什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 幫助別人成功</li><li><span class="lab">(B)</span> 為人著想</li><li><span class="lab">(C)</span> 樂於助人</li><li><span class="lab">(D)</span> 徒然為他人辛苦</li></ul></li>
+<li class="q"><div class="stem">「平生<u><b>於</b></u>書，未嘗苟且」的「於」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 對於</li><li><span class="lab">(B)</span> 向</li><li><span class="lab">(C)</span> 在</li><li><span class="lab">(D)</span> 比</li></ul></li>
+<li class="q"><div class="stem">下列「於」字，何者與「學謳<u><b>於</b></u>秦青」的「於」意思相同（向）？</div><ul class="opts"><li><span class="lab">(A)</span> 苛政猛<u><b>於</b></u>虎</li><li><span class="lab">(B)</span> 問道<u><b>於</b></u>盲</li><li><span class="lab">(C)</span> 己所不欲，勿施<u><b>於</b></u>人</li><li><span class="lab">(D)</span> 餞<u><b>於</b></u>郊衢</li></ul></li>
+<li class="q"><div class="stem">下列「於」字的解釋，何者「錯誤」？</div><ul class="opts"><li><span class="lab">(A)</span> 平生<u><b>於</b></u>書：對於</li><li><span class="lab">(B)</span> 餞<u><b>於</b></u>郊衢：在</li><li><span class="lab">(C)</span> 己所不欲，勿施<u><b>於</b></u>人：被</li><li><span class="lab">(D)</span> 苛政猛<u><b>於</b></u>虎：比</li></ul></li>
+<li class="q"><div class="stem">下列「於」字，何者與「見笑<u><b>於</b></u>大方之家」的「於」意思相同（被）？</div><ul class="opts"><li><span class="lab">(A)</span> 苛政猛<u><b>於</b></u>虎</li><li><span class="lab">(B)</span> 餞<u><b>於</b></u>郊衢</li><li><span class="lab">(C)</span> 不拘<u><b>於</b></u>時</li><li><span class="lab">(D)</span> 平生<u><b>於</b></u>書</li></ul></li>
+<li class="q"><div class="stem">「薛譚乃<u><b>謝</b></u>求反」的「謝」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 感謝</li><li><span class="lab">(B)</span> 拒絕</li><li><span class="lab">(C)</span> 賠罪、道歉</li><li><span class="lab">(D)</span> 凋落</li></ul></li>
+<li class="q"><div class="stem">下列「謝」字，何者與「敬<u><b>謝</b></u>不敏」的「謝」意思相同（拒絕）？</div><ul class="opts"><li><span class="lab">(A)</span> 閉門<u><b>謝</b></u>客</li><li><span class="lab">(B)</span> 向老師<u><b>謝</b></u>罪</li><li><span class="lab">(C)</span> <u><b>謝</b></u>天<u><b>謝</b></u>地</li><li><span class="lab">(D)</span> 花<u><b>謝</b></u>花飛</li></ul></li>
+<li class="q"><div class="stem">「遂<u><b>悉</b></u>罷之」的「悉」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 熟悉</li><li><span class="lab">(B)</span> 全部</li><li><span class="lab">(C)</span> 詳細</li><li><span class="lab">(D)</span> 知道</li></ul></li>
+<li class="q"><div class="stem">「遂悉罷之」、「舉州皆謂燈為火」、「竟月無雨」三句中，下列哪個字「不」表示「全部、整個」？</div><ul class="opts"><li><span class="lab">(A)</span> <u><b>悉</b></u></li><li><span class="lab">(B)</span> <u><b>舉</b></u></li><li><span class="lab">(C)</span> <u><b>竟</b></u></li><li><span class="lab">(D)</span> <u><b>遂</b></u></li></ul></li>
+<li class="q"><div class="stem">「李林甫<u><b>為</b></u>相，凡才望功業出己右者，必百計去<u><b>之</b></u>」，句中畫線的「為」與「之」，意思依序是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 因為；助詞，的</li><li><span class="lab">(B)</span> 被；代詞，指才望功業出己右者</li><li><span class="lab">(C)</span> 替；助詞，無意義</li><li><span class="lab">(D)</span> 擔任；代詞，指才望功業出己右者</li></ul></li>
+    </ol>
+    
+  </section>
+
+  <section id="lessonqs">
+    <h2 class="newpage">古文今讀 1–5 課　課文選擇題</h2>
+    <p class="infoline">班級：＿＿＿＿　座號：＿＿＿＿　姓名：＿＿＿＿＿＿　　得分：＿＿＿＿</p>
+    <p class="rule">每課 5 題，每題 4 分，共 100 分。</p>
+<h3 class="lesson">第1課　文徵明習字<small>　《書林紀事》</small></h3>
+<ol class="qs">
+<li class="q"><div class="stem">關於《千字文》的敘述，下列何者正確？</div><ul class="opts one"><li><span class="lab">(A)</span> 是文徵明所撰寫的書法作品</li><li><span class="lab">(B)</span> 由一千個不同的單字寫成，每四個字成一句，易於背誦</li><li><span class="lab">(C)</span> 每五個字成一句，不講究押韻</li><li><span class="lab">(D)</span> 是唐代詩人所編的詩集</li></ul></li>
+<li class="q"><div class="stem">「日以十本為<u><b>率</b></u>」的「率」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 輕率</li><li><span class="lab">(B)</span> 帶領</li><li><span class="lab">(C)</span> 標準、準則</li><li><span class="lab">(D)</span> 比例</li></ul></li>
+<li class="q"><div class="stem">「未嘗<u><b>苟且</b></u>」的「苟且」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 馬虎草率、得過且過</li><li><span class="lab">(B)</span> 暫時</li><li><span class="lab">(C)</span> 苦苦哀求</li><li><span class="lab">(D)</span> 猶豫不決</li></ul></li>
+<li class="q"><div class="stem">「少不當意，必再三易之不厭」，主要表現文徵明什麼態度？</div><ul class="opts"><li><span class="lab">(A)</span> 喜歡炫耀書法</li><li><span class="lab">(B)</span> 不願意回覆他人書信</li><li><span class="lab">(C)</span> 追求寫字的速度</li><li><span class="lab">(D)</span> 對自己要求嚴格，力求完善</li></ul></li>
+<li class="q"><div class="stem">「永字八法」是指什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 練習書法的八個步驟</li><li><span class="lab">(B)</span> 「永」字的八種筆畫，是書法必須熟練的基本筆畫</li><li><span class="lab">(C)</span> 八種不同的書體</li><li><span class="lab">(D)</span> 保存書法作品的八種方法</li></ul></li>
+</ol>
+
+<h3 class="lesson">第2課　子罕辭寶<small>　《左傳》</small></h3>
+<ol class="qs">
+<li class="q"><div class="stem">子罕是哪個時代、哪一國的人？</div><ul class="opts"><li><span class="lab">(A)</span> 春秋時宋國大夫</li><li><span class="lab">(B)</span> 戰國時齊國大夫</li><li><span class="lab">(C)</span> 春秋時魯國國君</li><li><span class="lab">(D)</span> 唐代宰相</li></ul></li>
+<li class="q"><div class="stem">「<u><b>稽首</b></u>而告曰」的「稽首」指什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 抬頭望天</li><li><span class="lab">(B)</span> 點頭稱是</li><li><span class="lab">(C)</span> 叩問姓名</li><li><span class="lab">(D)</span> 俯首至地的最敬禮</li></ul></li>
+<li class="q"><div class="stem">子罕說「我以不貪為寶」，他所珍視的「寶」是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 未經雕琢的璞玉</li><li><span class="lab">(B)</span> 宋國的官位</li><li><span class="lab">(C)</span> 不貪戀財物的品德</li><li><span class="lab">(D)</span> 玉工的鑑定證明</li></ul></li>
+<li class="q"><div class="stem">對於獻玉的人，子罕最後如何處理？</div><ul class="opts one"><li><span class="lab">(A)</span> 收下玉，另外送他一筆錢</li><li><span class="lab">(B)</span> 請玉工雕琢，賣掉後將錢交給獻玉者，讓他富有後再送他回家</li><li><span class="lab">(C)</span> 把玉轉獻給國君</li><li><span class="lab">(D)</span> 把玉還給獻玉者，請他趕快離開</li></ul></li>
+<li class="q"><div class="stem">「匹夫無罪，懷璧其罪」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 平常人擁有珍貴的璧玉，容易招來禍害；也比喻人懷才而遭嫉妒陷害</li><li><span class="lab">(B)</span> 平民百姓不會犯罪，只有擁有玉的人才會犯罪</li><li><span class="lab">(C)</span> 有玉的人一定是有罪的人</li><li><span class="lab">(D)</span> 平民不應該擁有玉</li></ul></li>
+</ol>
+
+<h3 class="lesson">第3課　口蜜腹劍<small>　《資治通鑑》</small></h3>
+<ol class="qs">
+<li class="q"><div class="stem">「凡才望功業<u><b>出己右</b></u>者」的「出己右」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 位在自己右手邊</li><li><span class="lab">(B)</span> 比自己差</li><li><span class="lab">(C)</span> 比自己好、超過自己</li><li><span class="lab">(D)</span> 與自己不分上下</li></ul></li>
+<li class="q"><div class="stem">「<u><b>啖</b></u>以<u><b>甘言</b></u>」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 用美食款待他</li><li><span class="lab">(B)</span> 用好聽順耳的話誘使他聽從自己</li><li><span class="lab">(C)</span> 用嚴厲的話責備他</li><li><span class="lab">(D)</span> 用甘甜的水招待他</li></ul></li>
+<li class="q"><div class="stem">「或<u><b>陽</b></u>與之善，而<u><b>陰</b></u>陷之」中的「陽」「陰」，意思依序是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 白天；夜晚</li><li><span class="lab">(B)</span> 溫暖；寒冷</li><li><span class="lab">(C)</span> 男性；女性</li><li><span class="lab">(D)</span> 表面上；暗地裡</li></ul></li>
+<li class="q"><div class="stem">下列哪一個成語，與「口蜜腹劍」的意思最接近？</div><ul class="opts"><li><span class="lab">(A)</span> 笑裡藏刀</li><li><span class="lab">(B)</span> 苦口婆心</li><li><span class="lab">(C)</span> 推心置腹</li><li><span class="lab">(D)</span> 心直口快</li></ul></li>
+<li class="q"><div class="stem">「君子之交淡如水，小人之交濃若醴」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 君子與小人只能用酒水來交往</li><li><span class="lab">(B)</span> 君子的交情熱烈濃厚，小人的交情冷淡疏遠</li><li><span class="lab">(C)</span> 君子的交情看似清淡卻真摯長久，小人的交情看似親密卻常別有用心</li><li><span class="lab">(D)</span> 君子不與人結交，只有小人才交朋友</li></ul></li>
+</ol>
+
+<h3 class="lesson">第4課　范公為參政<small>　《五朝名臣言行錄》</small></h3>
+<ol class="qs">
+<li class="q"><div class="stem">「范公為<u><b>參政</b></u>」的「參政」是什麼官職？</div><ul class="opts"><li><span class="lab">(A)</span> 掌管兵事的樞密使</li><li><span class="lab">(B)</span> 監察地方的監司</li><li><span class="lab">(C)</span> 地方行政區的長官</li><li><span class="lab">(D)</span> 當時的副宰相</li></ul></li>
+<li class="q"><div class="stem">「<u><b>銳意</b></u>天下之事」的「銳意」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 意志堅決</li><li><span class="lab">(B)</span> 心思敏銳</li><li><span class="lab">(C)</span> 隨意</li><li><span class="lab">(D)</span> 得意</li></ul></li>
+<li class="q"><div class="stem">富弼稱范仲淹為「十二丈」，這個稱呼是什麼意思？</div><ul class="opts one"><li><span class="lab">(A)</span> 他身高十二丈</li><li><span class="lab">(B)</span> 「丈」是對長輩的尊稱，「十二」是范仲淹的排行</li><li><span class="lab">(C)</span> 他在朝中的官階排第十二</li><li><span class="lab">(D)</span> 他當時已經十二歲</li></ul></li>
+<li class="q"><div class="stem">「一家哭，何如一路哭耶」，范仲淹的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 罷免官員會讓許多人痛哭，所以應該保留他們</li><li><span class="lab">(B)</span> 他不在乎別人的哭泣</li><li><span class="lab">(C)</span> 撤換不稱職的官員雖然讓一家難過，卻能避免整個地區的百姓受苦</li><li><span class="lab">(D)</span> 官員一家哭泣是他們應得的懲罰</li></ul></li>
+<li class="q"><div class="stem">從這則故事，最能看出范仲淹有什麼特質？</div><ul class="opts one"><li><span class="lab">(A)</span> 心軟而優柔寡斷</li><li><span class="lab">(B)</span> 重視個人人情勝過公務</li><li><span class="lab">(C)</span> 喜歡排擠同僚</li><li><span class="lab">(D)</span> 以天下為己任，能以百姓利益為重、果決處事</li></ul></li>
+</ol>
+
+<h3 class="lesson">第5課　薛譚學謳<small>　《列子》</small></h3>
+<ol class="qs">
+<li class="q"><div class="stem">「未<u><b>窮</b></u>秦青之技」的「窮」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 貧困</li><li><span class="lab">(B)</span> 盡、窮盡</li><li><span class="lab">(C)</span> 走投無路</li><li><span class="lab">(D)</span> 追究</li></ul></li>
+<li class="q"><div class="stem">薛譚為什麼向秦青告辭回家？</div><ul class="opts"><li><span class="lab">(A)</span> 想家、思念親人</li><li><span class="lab">(B)</span> 沒有錢繼續學習</li><li><span class="lab">(C)</span> 自認已經學盡老師的技藝</li><li><span class="lab">(D)</span> 想與秦青互相唱和</li></ul></li>
+<li class="q"><div class="stem">「秦青弗止，餞於郊衢」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 秦青沒有阻攔，在城外大路旁設宴送別</li><li><span class="lab">(B)</span> 秦青不肯放他走，在郊外設宴挽留</li><li><span class="lab">(C)</span> 秦青很生氣，在郊外趕走他</li><li><span class="lab">(D)</span> 秦青沒有阻攔，也沒有為他送行</li></ul></li>
+<li class="q"><div class="stem">秦青「撫節悲歌，聲振林木，響遏行雲」，主要的用意是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 炫耀自己的名聲</li><li><span class="lab">(B)</span> 教薛譚學一首新歌</li><li><span class="lab">(C)</span> 只是為薛譚壯行送別</li><li><span class="lab">(D)</span> 讓薛譚明白自己的技藝仍遠遠不足，需要再潛心學習</li></ul></li>
+<li class="q"><div class="stem">下列關於音樂成語的解釋，何者正確？</div><ul class="opts one"><li><span class="lab">(A)</span> 響遏行雲：形容歌聲低沉，使雲飄走</li><li><span class="lab">(B)</span> 六馬仰秣：形容馬奔跑的速度極快</li><li><span class="lab">(C)</span> 餘音繞梁：形容音樂美妙感人，餘味不絕</li><li><span class="lab">(D)</span> 餘音繞梁：「餘」是多餘、無用的意思</li></ul></li>
+</ol>
+
+  </section>
+
+  <section id="answers">
+    <h2 class="newpage">參考答案與解析</h2>
+    <details class="answers">
+      <summary>顯示參考答案與解析（老師用）</summary>
+      <h3>壹、虛字練習</h3>
+      <div class="tablewrap"><table class="key">
+<thead><tr><th>題號</th><th>答案</th><th>解析</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td class="c ans">B</td><td>「秦青之技」「文學之士」的「之」皆為助詞，相當於「的」；其餘三者為代詞。</td></tr>
+<tr><td class="c">2</td><td class="c ans">C</td><td>「易之」的「之」代指書信；A、B 為助詞「的」，D 為動詞「到」。</td></tr>
+<tr><td class="c">3</td><td class="c ans">D</td><td>「之南海」的「之」是動詞，解作「到」；A 為助詞「的」，B 為助詞、無意義，C 為代詞。</td></tr>
+<tr><td class="c">4</td><td class="c ans">B</td><td>「頃之」的「之」無意義；A、C 為代詞，D 為助詞「的」。</td></tr>
+<tr><td class="c">5</td><td class="c ans">A</td><td>「子路為武城宰」的「為」＝擔任；B 行、做，C 被，D 替、給。</td></tr>
+<tr><td class="c">6</td><td class="c ans">C</td><td>此「為」讀ㄨㄟˋ，介詞，解作「替、給」。</td></tr>
+<tr><td class="c">7</td><td class="c ans">A</td><td>「為民服務」讀ㄨㄟˋ（替、給）；B 當作、C 治理、D 是，皆讀ㄨㄟˊ。</td></tr>
+<tr><td class="c">8</td><td class="c ans">D</td><td>「及為上所厚」的「為」＝被；A 行、做，B 因為，C 堆積。</td></tr>
+<tr><td class="c">9</td><td class="c ans">A</td><td>前者「與、同」，後者「因為」，兩者皆讀ㄨㄟˋ。</td></tr>
+<tr><td class="c">10</td><td class="c ans">B</td><td>B 兩者皆為「行、做」。A 治理／擔任，C 替／被，D 與／替，皆不相同。</td></tr>
+<tr><td class="c">11</td><td class="c ans">D</td><td>「為別人作嫁衣裳」比喻徒然為他人辛苦，自己卻沒有得到好處。</td></tr>
+<tr><td class="c">12</td><td class="c ans">A</td><td>此「於」為介詞，解作「對於」。</td></tr>
+<tr><td class="c">13</td><td class="c ans">B</td><td>「學謳於秦青」「問道於盲」的「於」皆＝向。A 比，C 給，D 在。</td></tr>
+<tr><td class="c">14</td><td class="c ans">C</td><td>「勿施於人」的「於」是「給」，不是「被」。</td></tr>
+<tr><td class="c">15</td><td class="c ans">C</td><td>「見笑於大方之家」「不拘於時」的「於」皆＝被。A 比，B 在，D 對於。</td></tr>
+<tr><td class="c">16</td><td class="c ans">C</td><td>薛譚向秦青賠罪、道歉，請求返回師門，故「謝」＝賠罪。</td></tr>
+<tr><td class="c">17</td><td class="c ans">A</td><td>「閉門謝客」「敬謝不敏」的「謝」皆＝拒絕。B 賠罪，C 感謝，D 凋落。</td></tr>
+<tr><td class="c">18</td><td class="c ans">B</td><td>此「悉」為副詞，解作「全部地」。</td></tr>
+<tr><td class="c">19</td><td class="c ans">D</td><td>悉、舉、竟皆有「全、整個」之意；「遂」是「於是、就」。</td></tr>
+<tr><td class="c">20</td><td class="c ans">D</td><td>「為相」＝擔任宰相；「去之」的「之」代指才望功業超過自己的人。</td></tr>
+</tbody></table></div>
+      <h3>貳、課文選擇題（題號：課次－題號）</h3>
+      <div class="tablewrap"><table class="key">
+<thead><tr><th>題號</th><th>答案</th><th>解析</th></tr></thead>
+<tbody>
+<tr><td class="c">1－1</td><td class="c ans">B</td><td>《千字文》為南朝梁周興嗣所撰，以一千個不同的單字寫成，每四字一句、對偶押韻，是古時兒童啟蒙的教材。</td></tr>
+<tr><td class="c">1－2</td><td class="c ans">C</td><td>「率」在此解作「標準、準則」，意思是每天以寫十本為標準。</td></tr>
+<tr><td class="c">1－3</td><td class="c ans">A</td><td>「苟且」指馬虎草率、得過且過；「未嘗苟且」是從不馬虎草率。</td></tr>
+<tr><td class="c">1－4</td><td class="c ans">D</td><td>「少」＝稍微，「當意」＝滿意；稍有不滿意就一再修改而不厭倦，可見他對自己要求嚴格、力求完善。</td></tr>
+<tr><td class="c">1－5</td><td class="c ans">B</td><td>「永字八法」指「永」字的八個筆畫（側、勒、努、趯、策、掠、啄、磔），是寫書法必須熟練的八種筆畫。</td></tr>
+<tr><td class="c">2－1</td><td class="c ans">A</td><td>子罕是春秋時宋國大夫，施政寬厚，體恤百姓。</td></tr>
+<tr><td class="c">2－2</td><td class="c ans">D</td><td>「稽首」是俯首至地的最敬禮。</td></tr>
+<tr><td class="c">2－3</td><td class="c ans">C</td><td>子罕以「不貪」的品德為寶；他拒絕的是玉，而不是把玉當作自己的寶物。</td></tr>
+<tr><td class="c">2－4</td><td class="c ans">B</td><td>子罕把玉放在自己住的地方，請玉工雕琢後賣出，再把錢交給獻玉者，讓他富有後才送他回家。</td></tr>
+<tr><td class="c">2－5</td><td class="c ans">A</td><td>此句比喻擁有珍寶或才能，容易招來禍害或遭人嫉妒陷害。</td></tr>
+<tr><td class="c">3－1</td><td class="c ans">C</td><td>古代以右為上，「出己右」即位在自己之上，也就是比自己好、超越自己。</td></tr>
+<tr><td class="c">3－2</td><td class="c ans">B</td><td>「啖」＝誘使別人聽從自己；「甘言」＝好聽順耳的話。</td></tr>
+<tr><td class="c">3－3</td><td class="c ans">D</td><td>「陽」是表面上，「陰」是暗地裡；表面與人友好，暗中陷害，正是「口蜜腹劍」。</td></tr>
+<tr><td class="c">3－4</td><td class="c ans">A</td><td>「笑裡藏刀」也是表面和善、暗藏害人心思；B 是懇切勸說，C 是真誠相待，D 是說話直爽。</td></tr>
+<tr><td class="c">3－5</td><td class="c ans">C</td><td>君子志同道合、不求私利，交情清淡而真摯；小人的交情像醇酒般親密，卻常別有用心，無法長久。</td></tr>
+<tr><td class="c">4－1</td><td class="c ans">D</td><td>「參政」是當時的副宰相；樞密使掌管國家兵事機要，監司則監察地方州郡官員。</td></tr>
+<tr><td class="c">4－2</td><td class="c ans">A</td><td>「銳意」指意志堅決，形容范仲淹立志革新天下之事。</td></tr>
+<tr><td class="c">4－3</td><td class="c ans">B</td><td>「丈」是對男性老者或長輩的尊稱；「十二丈」的「十二」是范仲淹的排行輩分。</td></tr>
+<tr><td class="c">4－4</td><td class="c ans">C</td><td>「路」是宋代的行政區域；不稱職的官員留任，會使一整個地區的百姓受苦，所以寧可讓一家哭。</td></tr>
+<tr><td class="c">4－5</td><td class="c ans">D</td><td>范仲淹不顧人情壓力，一筆勾去不稱職的官員，可見他以百姓利益為重、做事果決。</td></tr>
+<tr><td class="c">5－1</td><td class="c ans">B</td><td>「窮」＝盡；「未窮秦青之技」是還沒有學盡秦青的技藝。</td></tr>
+<tr><td class="c">5－2</td><td class="c ans">C</td><td>原文「自謂盡之，遂辭歸」，薛譚自以為學盡了老師的技藝，所以告辭。</td></tr>
+<tr><td class="c">5－3</td><td class="c ans">A</td><td>「弗止」＝不阻攔；「餞」＝設宴送別；「衢」＝城市郊外的大道。</td></tr>
+<tr><td class="c">5－4</td><td class="c ans">D</td><td>秦青以歌聲讓薛譚知道自己的不足，薛譚因此道歉並請求返回師門。</td></tr>
+<tr><td class="c">5－5</td><td class="c ans">C</td><td>「餘音繞梁」形容音樂美妙，餘味不絕；「餘」是不盡的、未完的。「響遏行雲」形容聲音響亮高妙，能止住飄動的雲；「六馬仰秣」比喻專心傾聽。</td></tr>
+</tbody></table></div>
+    </details>
+  </section>
+
+  <footer>古文今讀 1–5 課　虛字整理與選擇題</footer>
+</main>
+</body>
+</html>
