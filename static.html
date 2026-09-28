@@ -110,7 +110,7 @@
   @media print {
     body { font-size: 12pt; }
     main { max-width: none; padding: 0; }
-    nav.toc, .bar, .exp, .sec-score { display: none !important; }
+    nav.toc, .bar, .exp, .sec-score, .who, .sendmsg { display: none !important; }
     .printonly { display: block; }
     button.opt { border: 0; padding: 0; }
     h2.newpage { page-break-before: always; }
@@ -119,6 +119,16 @@
     .tablewrap { overflow: visible; }
     details.answers { border: none; padding: 0; }
   }
+  .who { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 12px 0 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; font-family: system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; font-size: .92rem; }
+  .who label { display: inline-flex; align-items: center; gap: 6px; }
+  .who input { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; width: 7em; }
+  .who input.narrow { width: 4.5em; }
+  .sendmsg { flex: 1 0 100%; font-size: .85rem; color: var(--muted); }
+  .sendmsg:empty { display: none; }
+  .lt h4 { margin: 12px 0 2px; color: var(--accent); font-size: 1rem; }
+  .lt p { margin: 2px 0; }
+  .lt .orig { font-size: 1.12rem; line-height: 1.9; }
+  .lt .notes { font-size: .92rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -129,11 +139,10 @@
   <p class="legend">出處：課外補充＝不在課本內的補充例句；簡報＝老師簡報例句；課本標註＝課本旁註所列</p>
   <p class="legend">講義版（與 Word 檔相同，適合閱讀與列印）｜<a href="./">前往互動版</a></p>
   <nav class="toc" aria-label="目錄">
-    <a href="#handout">虛字整理</a>
-    <a href="#practice">虛字練習</a>
-    <a href="#lessonqs">課文選擇題</a>
-    <a href="#answers">參考答案</a>
+<a href="#handout">虛字整理</a><a href="#practice">虛字練習</a><a href="#lessonqs">課文選擇題</a><a href="#answers">參考答案</a>
   </nav>
+
+
 
 
 
@@ -181,7 +190,7 @@
 <tbody>
 <tr><th scope="row">對於</th><td><div class="ex">平生<span class="hl">「於」</span>書<span class="src">（第1課）</span></div></td></tr>
 <tr><th scope="row">向</th><td><div class="ex">學謳<span class="hl">「於」</span>秦青<span class="src">（第5課）</span></div></td></tr>
-<tr><th scope="row">在</th><td><div class="ex">餞<span class="hl">「於」</span>郊衢<span class="src">（第5課）</span></div></td></tr>
+<tr><th scope="row">在</th><td><div class="ex">餞行<span class="hl">「於」</span>郊衢<span class="src">（第5課）</span></div></td></tr>
 <tr><th scope="row">比</th><td><div class="ex">苛政猛<span class="hl">「於」</span>虎<span class="src">（課本標註）</span></div></td></tr>
 <tr><th scope="row">給</th><td><div class="ex">己所不欲，勿施<span class="hl">「於」</span>人<span class="src">（課本標註）</span></div></td></tr>
 <tr><th scope="row">被</th><td><div class="ex">是法不信<span class="hl">「於」</span>民也<span class="src">（課外補充）</span></div></td></tr>
@@ -237,7 +246,7 @@
     <h2 class="newpage">古文今讀 1–5 課　課文選擇題</h2>
     <p class="infoline">班級：＿＿＿＿　座號：＿＿＿＿　姓名：＿＿＿＿＿＿　　得分：＿＿＿＿</p>
     <p class="rule">每課 5 題，每題 4 分，共 100 分。</p>
-<h3 class="lesson">第1課　文徵明習字<small>　《書林紀事》</small></h3>
+<h3 class="lesson" id="lesson-1">第1課　文徵明習字<small>　《書林紀事》</small></h3>
 <ol class="qs">
 <li class="q"><div class="stem">關於《千字文》的敘述，下列何者正確？</div><ul class="opts one"><li><span class="lab">(A)</span> 是文徵明所撰寫的書法作品</li><li><span class="lab">(B)</span> 由一千個不同的單字寫成，每四個字成一句，易於背誦</li><li><span class="lab">(C)</span> 每五個字成一句，不講究押韻</li><li><span class="lab">(D)</span> 是唐代詩人所編的詩集</li></ul></li>
 <li class="q"><div class="stem">「日以十本為<u><b>率</b></u>」的「率」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 輕率</li><li><span class="lab">(B)</span> 帶領</li><li><span class="lab">(C)</span> 標準、準則</li><li><span class="lab">(D)</span> 比例</li></ul></li>
@@ -246,7 +255,7 @@
 <li class="q"><div class="stem">「永字八法」是指什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 練習書法的八個步驟</li><li><span class="lab">(B)</span> 「永」字的八種筆畫，是書法必須熟練的基本筆畫</li><li><span class="lab">(C)</span> 八種不同的書體</li><li><span class="lab">(D)</span> 保存書法作品的八種方法</li></ul></li>
 </ol>
 
-<h3 class="lesson">第2課　子罕辭寶<small>　《左傳》</small></h3>
+<h3 class="lesson" id="lesson-2">第2課　子罕辭寶<small>　《左傳》</small></h3>
 <ol class="qs">
 <li class="q"><div class="stem">從這篇課文來看，子罕的人格特質是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 仁民愛物</li><li><span class="lab">(B)</span> 貪圖財利</li><li><span class="lab">(C)</span> 剛愎自用</li><li><span class="lab">(D)</span> 趨炎附勢</li></ul></li>
 <li class="q"><div class="stem">「<u><b>稽首</b></u>而告曰」的「稽首」指什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 抬頭望天</li><li><span class="lab">(B)</span> 點頭稱是</li><li><span class="lab">(C)</span> 叩問姓名</li><li><span class="lab">(D)</span> 俯首至地的最敬禮</li></ul></li>
@@ -255,7 +264,7 @@
 <li class="q"><div class="stem">「匹夫無罪，懷璧其罪」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 平常人擁有珍貴的璧玉，容易招來禍害；也比喻人懷才而遭嫉妒陷害</li><li><span class="lab">(B)</span> 平民百姓不會犯罪，只有擁有玉的人才會犯罪</li><li><span class="lab">(C)</span> 有玉的人一定是有罪的人</li><li><span class="lab">(D)</span> 平民不應該擁有玉</li></ul></li>
 </ol>
 
-<h3 class="lesson">第3課　口蜜腹劍<small>　《資治通鑑》</small></h3>
+<h3 class="lesson" id="lesson-3">第3課　口蜜腹劍<small>　《資治通鑑》</small></h3>
 <ol class="qs">
 <li class="q"><div class="stem">「凡才望功業<u><b>出己右</b></u>者」的「出己右」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 位在自己右手邊</li><li><span class="lab">(B)</span> 比自己差</li><li><span class="lab">(C)</span> 比自己好、超過自己</li><li><span class="lab">(D)</span> 與自己不分上下</li></ul></li>
 <li class="q"><div class="stem">「<u><b>啖</b></u>以<u><b>甘言</b></u>」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 用美食款待他</li><li><span class="lab">(B)</span> 用好聽順耳的話誘使他聽從自己</li><li><span class="lab">(C)</span> 用嚴厲的話責備他</li><li><span class="lab">(D)</span> 用甘甜的水招待他</li></ul></li>
@@ -264,7 +273,7 @@
 <li class="q"><div class="stem">「君子之交淡如水，小人之交濃若醴」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 君子與小人只能用酒水來交往</li><li><span class="lab">(B)</span> 君子的交情熱烈濃厚，小人的交情冷淡疏遠</li><li><span class="lab">(C)</span> 君子的交情看似清淡卻真摯長久，小人的交情看似親密卻常別有用心</li><li><span class="lab">(D)</span> 君子不與人結交，只有小人才交朋友</li></ul></li>
 </ol>
 
-<h3 class="lesson">第4課　范公為參政<small>　《五朝名臣言行錄》</small></h3>
+<h3 class="lesson" id="lesson-4">第4課　范公為參政<small>　《五朝名臣言行錄》</small></h3>
 <ol class="qs">
 <li class="q"><div class="stem">「范公為<u><b>參政</b></u>」的「參政」是什麼官職？</div><ul class="opts"><li><span class="lab">(A)</span> 掌管兵事的樞密使</li><li><span class="lab">(B)</span> 監察地方的監司</li><li><span class="lab">(C)</span> 地方行政區的長官</li><li><span class="lab">(D)</span> 當時的副宰相</li></ul></li>
 <li class="q"><div class="stem">「<u><b>銳意</b></u>天下之事」的「銳意」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 意志堅決</li><li><span class="lab">(B)</span> 心思敏銳</li><li><span class="lab">(C)</span> 隨意</li><li><span class="lab">(D)</span> 得意</li></ul></li>
@@ -273,16 +282,17 @@
 <li class="q"><div class="stem">從這則故事，最能看出范仲淹有什麼特質？</div><ul class="opts one"><li><span class="lab">(A)</span> 心軟而優柔寡斷</li><li><span class="lab">(B)</span> 重視個人人情勝過公務</li><li><span class="lab">(C)</span> 喜歡排擠同僚</li><li><span class="lab">(D)</span> 以天下為己任，能以百姓利益為重、果決處事</li></ul></li>
 </ol>
 
-<h3 class="lesson">第5課　薛譚學謳<small>　《列子》</small></h3>
+<h3 class="lesson" id="lesson-5">第5課　薛譚學謳<small>　《列子》</small></h3>
 <ol class="qs">
 <li class="q"><div class="stem">「未<u><b>窮</b></u>秦青之技」的「窮」意思是什麼？</div><ul class="opts"><li><span class="lab">(A)</span> 貧困</li><li><span class="lab">(B)</span> 盡、窮盡</li><li><span class="lab">(C)</span> 走投無路</li><li><span class="lab">(D)</span> 追究</li></ul></li>
 <li class="q"><div class="stem">薛譚為什麼向秦青告辭回家？</div><ul class="opts"><li><span class="lab">(A)</span> 想家、思念親人</li><li><span class="lab">(B)</span> 沒有錢繼續學習</li><li><span class="lab">(C)</span> 自認已經學盡老師的技藝</li><li><span class="lab">(D)</span> 想與秦青互相唱和</li></ul></li>
-<li class="q"><div class="stem">「秦青弗止，餞於郊衢」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 秦青沒有阻攔，在城外大路旁設宴送別</li><li><span class="lab">(B)</span> 秦青不肯放他走，在郊外設宴挽留</li><li><span class="lab">(C)</span> 秦青很生氣，在郊外趕走他</li><li><span class="lab">(D)</span> 秦青沒有阻攔，也沒有為他送行</li></ul></li>
+<li class="q"><div class="stem">「秦青弗止，餞行於郊衢」的意思是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 秦青沒有阻攔，在城外大路旁設宴送別</li><li><span class="lab">(B)</span> 秦青不肯放他走，在郊外設宴挽留</li><li><span class="lab">(C)</span> 秦青很生氣，在郊外趕走他</li><li><span class="lab">(D)</span> 秦青沒有阻攔，也沒有為他送行</li></ul></li>
 <li class="q"><div class="stem">秦青「撫節悲歌，聲振林木，響遏行雲」，主要的用意是什麼？</div><ul class="opts one"><li><span class="lab">(A)</span> 炫耀自己的名聲</li><li><span class="lab">(B)</span> 教薛譚學一首新歌</li><li><span class="lab">(C)</span> 只是為薛譚壯行送別</li><li><span class="lab">(D)</span> 讓薛譚明白自己的技藝仍遠遠不足，需要再潛心學習</li></ul></li>
 <li class="q"><div class="stem">下列關於音樂成語的解釋，何者正確？</div><ul class="opts one"><li><span class="lab">(A)</span> 響遏行雲：形容歌聲低沉，使雲飄走</li><li><span class="lab">(B)</span> 六馬仰秣：形容馬奔跑的速度極快</li><li><span class="lab">(C)</span> 餘音繞梁：形容音樂美妙感人，餘味不絕</li><li><span class="lab">(D)</span> 餘音繞梁：「餘」是多餘、無用的意思</li></ul></li>
 </ol>
 
   </section>
+
 
   <section id="answers">
     <h2 class="newpage">參考答案與解析</h2>
