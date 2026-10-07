@@ -166,6 +166,21 @@
 
   table.idiom tbody tr.grp th { background: color-mix(in srgb, #f08c00 16%, var(--bg)); color: #b35c00; text-align: left; font-size: .92rem; padding-top: 8px; padding-bottom: 8px; }
   table.idiom tbody th[scope="row"] { width: 10.5em; background: var(--row); text-align: center; white-space: normal; }
+
+  .idiom-list { margin-top: 6px; }
+  .idiom-group { color: #b35c00; background: color-mix(in srgb, #f08c00 16%, var(--bg)); padding: 6px 12px; border-radius: 6px; margin: 18px 0 8px; font-size: 1rem; }
+  .idiom-card { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-left: 4px solid #f08c00; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .idiom-no { flex: 0 0 auto; width: 1.6em; height: 1.6em; line-height: 1.6em; text-align: center; border-radius: 50%; background: #f08c00; color: #fff; font-size: .82rem; font-weight: bold; font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; }
+  .idiom-term { font-weight: bold; font-size: 1.1rem; color: #b35c00; margin-bottom: 4px; }
+  .idiom-def { font-size: .97rem; line-height: 1.75; }
+
+  .dl-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .dl-card { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; text-decoration: none; color: var(--fg); }
+  .dl-card:hover { background: var(--row); }
+  .dl-icon { font-size: 1.6rem; }
+  .dl-text { display: flex; flex-direction: column; }
+  .dl-title { font-weight: bold; }
+  .dl-sub { font-size: .82rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -178,7 +193,7 @@
   <p class="legend">互動版（可直接點選作答）｜<a href="static.html">前往講義版（可列印）</a></p>
   </div>
   <nav class="toc" aria-label="目錄">
-<a href="#lesson-1">第1課</a><a href="#lesson-2">第2課</a><a href="#lesson-3">第3課</a><a href="#lesson-4">第4課</a><a href="#lesson-5">第5課</a><a href="#idioms">成語</a><a href="#handout">虛字整理</a><a href="#practice">虛字練習</a><a href="#answers">參考答案</a>
+<a href="#lesson-1">第1課</a><a href="#lesson-2">第2課</a><a href="#lesson-3">第3課</a><a href="#lesson-4">第4課</a><a href="#lesson-5">第5課</a><a href="#idioms">成語</a><a href="#handout">虛字整理</a><a href="#practice">虛字練習</a><a href="#answers">參考答案</a><a href="#downloads">下載 Word</a>
   </nav>
 
 
@@ -269,30 +284,28 @@
 <section id="idioms">
   <div class="zi-block" style="--c:#F08C00">
   <h2>成語精選</h2>
-  <div class="tablewrap"><table class="meaning idiom">
-<thead><tr><th>成語</th><th>釋義（課次關聯）</th></tr></thead>
-<tbody>
-<tr class="grp"><th colspan="2">第1課　文徵明習字（勤學）</th></tr>
-<tr><th scope="row">人一能之，己百之；人十能之，己千之</th><td>別人學一次就會，自己學一百次；別人學十次就會，自己學一千次；勉人只要肯下苦功，資質雖不如人，也能成功。（《中庸》）</td></tr>
-<tr><th scope="row">業精於勤，荒於嬉</th><td>學業的精進在於勤奮努力，荒廢則是由於嬉戲遊樂。（韓愈〈進學解〉）</td></tr>
-<tr><th scope="row">一勤天下無難事</th><td>只要肯勤奮努力，天下沒有做不成的事。</td></tr>
-<tr class="grp"><th colspan="2">第2課　子罕辭寶</th></tr>
-<tr><th scope="row">匹夫無罪，懷璧其罪</th><td>平常人擁有珍貴的璧玉，容易招來禍害；也比喻人懷才而遭嫉妒陷害。</td></tr>
-<tr><th scope="row">仁民愛物</th><td>愛護百姓，進而推及愛惜萬物；形容心存仁慈、寬厚待人待物。</td></tr>
-<tr class="grp"><th colspan="2">第3課　口蜜腹劍</th></tr>
-<tr><th scope="row">陽奉陰違</th><td>表面上遵從，暗地裡卻違背；形容人言行不一、口是心非。</td></tr>
-<tr><th scope="row">無人能出其右</th><td>沒有人能超越他；形容才能或地位極高，無人能比。</td></tr>
-<tr><th scope="row">虛左以待</th><td>空出尊位，恭敬地等候賓客到來；形容誠心禮遇賢才。</td></tr>
-<tr><th scope="row">左遷</th><td>降職、貶官。（古代官位以右為尊、左為卑，故稱降職為左遷）</td></tr>
-<tr class="grp"><th colspan="2">第4課　范公為參政</th></tr>
-<tr><th scope="row">不勝（ㄕㄥ）枚舉</th><td>無法一一列舉，形容數量極多。</td></tr>
-<tr><th scope="row">喜不自勝（ㄕㄥ）</th><td>高興到無法克制自己，形容非常開心。</td></tr>
-<tr class="grp"><th colspan="2">第5課　薛譚學謳</th></tr>
-<tr><th scope="row">響遏（ㄜˋ）行雲</th><td>聲音高亢響亮，能止住天上飄動的雲；形容歌聲嘹亮動聽。</td></tr>
-<tr><th scope="row">餘音繞梁</th><td>形容音樂美妙，餘韻繚繞屋梁不散，令人回味無窮。</td></tr>
-<tr><th scope="row">三月不知肉味</th><td>比喻對某事物全神貫注、沉醉入迷到渾然忘我的地步。（《論語》孔子在齊聞〈韶〉樂）</td></tr>
-<tr><th scope="row">六馬仰秣（ㄇㄛˋ）</th><td>形容樂聲美妙動聽，連拉車的馬都停下吃草、抬頭聆聽。</td></tr>
-</tbody></table></div>
+  <div class="idiom-list">
+<h4 class="idiom-group">第1課　文徵明習字（勤學）</h4>
+<div class="idiom-card"><span class="idiom-no">1</span><div class="idiom-body"><div class="idiom-term">人一能之，己百之；人十能之，己千之</div><div class="idiom-def">別人學一次就會，自己學一百次；別人學十次就會，自己學一千次；勉人只要肯下苦功，資質雖不如人，也能成功。（《中庸》）</div></div></div>
+<div class="idiom-card"><span class="idiom-no">2</span><div class="idiom-body"><div class="idiom-term">業精於勤，荒於嬉</div><div class="idiom-def">學業的精進在於勤奮努力，荒廢則是由於嬉戲遊樂。（韓愈〈進學解〉）</div></div></div>
+<div class="idiom-card"><span class="idiom-no">3</span><div class="idiom-body"><div class="idiom-term">一勤天下無難事</div><div class="idiom-def">只要肯勤奮努力，天下沒有做不成的事。</div></div></div>
+<h4 class="idiom-group">第2課　子罕辭寶</h4>
+<div class="idiom-card"><span class="idiom-no">4</span><div class="idiom-body"><div class="idiom-term">匹夫無罪，懷璧其罪</div><div class="idiom-def">平常人擁有珍貴的璧玉，容易招來禍害；也比喻人懷才而遭嫉妒陷害。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">5</span><div class="idiom-body"><div class="idiom-term">仁民愛物</div><div class="idiom-def">愛護百姓，進而推及愛惜萬物；形容心存仁慈、寬厚待人待物。</div></div></div>
+<h4 class="idiom-group">第3課　口蜜腹劍</h4>
+<div class="idiom-card"><span class="idiom-no">6</span><div class="idiom-body"><div class="idiom-term">陽奉陰違</div><div class="idiom-def">表面上遵從，暗地裡卻違背；形容人言行不一、口是心非。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">7</span><div class="idiom-body"><div class="idiom-term">無人能出其右</div><div class="idiom-def">沒有人能超越他；形容才能或地位極高，無人能比。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">8</span><div class="idiom-body"><div class="idiom-term">虛左以待</div><div class="idiom-def">空出尊位，恭敬地等候賓客到來；形容誠心禮遇賢才。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">9</span><div class="idiom-body"><div class="idiom-term">左遷</div><div class="idiom-def">降職、貶官。（古代官位以右為尊、左為卑，故稱降職為左遷）</div></div></div>
+<h4 class="idiom-group">第4課　范公為參政</h4>
+<div class="idiom-card"><span class="idiom-no">10</span><div class="idiom-body"><div class="idiom-term">不勝（ㄕㄥ）枚舉</div><div class="idiom-def">無法一一列舉，形容數量極多。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">11</span><div class="idiom-body"><div class="idiom-term">喜不自勝（ㄕㄥ）</div><div class="idiom-def">高興到無法克制自己，形容非常開心。</div></div></div>
+<h4 class="idiom-group">第5課　薛譚學謳</h4>
+<div class="idiom-card"><span class="idiom-no">12</span><div class="idiom-body"><div class="idiom-term">響遏（ㄜˋ）行雲</div><div class="idiom-def">聲音高亢響亮，能止住天上飄動的雲；形容歌聲嘹亮動聽。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">13</span><div class="idiom-body"><div class="idiom-term">餘音繞梁</div><div class="idiom-def">形容音樂美妙，餘韻繚繞屋梁不散，令人回味無窮。</div></div></div>
+<div class="idiom-card"><span class="idiom-no">14</span><div class="idiom-body"><div class="idiom-term">三月不知肉味</div><div class="idiom-def">比喻對某事物全神貫注、沉醉入迷到渾然忘我的地步。（《論語》孔子在齊聞〈韶〉樂）</div></div></div>
+<div class="idiom-card"><span class="idiom-no">15</span><div class="idiom-body"><div class="idiom-term">六馬仰秣（ㄇㄛˋ）</div><div class="idiom-def">形容樂聲美妙動聽，連拉車的馬都停下吃草、抬頭聆聽。</div></div></div>
+</div>
   <p class="note">「文房四寶」是書房用具的合稱，不是成語，列於第1課文學常識。</p>
   </div>
   <h3>成語練習</h3>
@@ -497,6 +510,20 @@
 
     </details>
   </section>
+
+<section id="downloads">
+  <h2>下載 Word 檔</h2>
+  <div class="dl-list">
+    <a class="dl-card" href="古文今讀1-5_虛字整理與選擇題.docx" download>
+      <span class="dl-icon">📄</span>
+      <span class="dl-text"><span class="dl-title">標準版 Word 檔</span><span class="dl-sub">虛字整理、課文、選擇題、成語（黑白，適合列印）</span></span>
+    </a>
+    <a class="dl-card" href="古文今讀1-5_虛字整理與選擇題_彩色版.docx" download>
+      <span class="dl-icon">🎨</span>
+      <span class="dl-text"><span class="dl-title">彩色版 Word 檔</span><span class="dl-sub">內容相同，依課次與單元上色</span></span>
+    </a>
+  </div>
+</section>
 
   <footer>古文今讀 1–5 課　虛字整理與選擇題</footer>
 </main>
