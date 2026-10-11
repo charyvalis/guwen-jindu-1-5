@@ -10,7 +10,7 @@
     --line: #a6a6a6; --row: #f7f7f7; --hl: #c00000; --blue: #ddebf7; --orange: #fce4d6;
     --ok: #2e7d32; --ok-bg: #e3f2e1; --bad: #c62828; --bad-bg: #fdeaea;
   }
-  @media (prefers-color-scheme: dark) {
+  @media screen and (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #161a16; --fg: #e8ece8; --muted: #9aa39a; --accent: #a9d18e; --accent-bg: #253323;
       --line: #4a544a; --row: #1e241e; --hl: #ff8a80; --blue: #1f3040; --orange: #40291f;
@@ -181,6 +181,45 @@
   .dl-text { display: flex; flex-direction: column; }
   .dl-title { font-weight: bold; }
   .dl-sub { font-size: .82rem; color: var(--muted); }
+
+  .wb-card {
+    margin: 14px 0 0; padding: 12px 16px; border-radius: 14px;
+    background: color-mix(in srgb, #ad1457 8%, var(--bg));
+    border: 1px solid color-mix(in srgb, #ad1457 28%, var(--bg));
+    font-family: system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  .wb-head { font-size: 1.02rem; line-height: 1.6; }
+  .wb-head b { font-size: 1.05rem; }
+  .wb-desc { color: var(--muted); font-size: .85rem; margin-top: 2px; }
+  .wb-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .wb-btn {
+    font: inherit; font-size: .92rem; border-radius: 999px; padding: 9px 18px; cursor: pointer;
+    border: 1px solid #ad1457;
+  }
+  .wb-btn.primary { background: #ad1457; color: #fff; }
+  .wb-btn.primary:disabled { background: #d9a7bf; border-color: #d9a7bf; cursor: not-allowed; }
+  .wb-btn.ghost { background: transparent; color: #ad1457; }
+  .wb-btn.ghost:disabled { color: #d9a7bf; border-color: #d9a7bf; cursor: not-allowed; }
+  #wrongbook-panel { margin-top: 10px; display: none; }
+  #wrongbook-panel.open { display: block; }
+  #wrongbook-panel .wb-panel-head { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 8px; }
+  #wrongbook-panel .wb-panel-head h3 { margin: 0; font-size: 1.05rem; color: #ad1457; }
+  #wrongbook-panel .wb-close {
+    font: inherit; font-size: .85rem; background: transparent; border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 12px; cursor: pointer; color: var(--fg);
+    font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
+  }
+  #wrongbook-panel .empty { color: var(--muted); font-size: .92rem; padding: 10px 2px; }
+  .wb-badge {
+    display: inline-block; margin-left: 8px; font-size: .78rem; font-weight: bold; color: #2e7d32;
+    background: #e3f2e1; border-radius: 999px; padding: 1px 10px;
+    font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
+  }
+  .wb-streak {
+    display: inline-block; margin-left: 8px; font-size: .78rem; color: #ad1457;
+    background: color-mix(in srgb, #ad1457 12%, var(--bg)); border-radius: 999px; padding: 1px 10px;
+    font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
+  }
 </style>
 </head>
 <body>
@@ -216,6 +255,17 @@
     </div>
   </div>
 
+  <div class="wb-card" id="wb-card">
+    <div class="wb-head">🧠 <b>錯題本</b>（<span id="wb-count">0</span> 題）　<span class="wb-desc">答錯會自動收進來，連續答對 2 次才畢業</span></div>
+    <div class="wb-acts">
+      <button type="button" id="wb-review-btn" class="wb-btn primary">複習錯題</button>
+      <button type="button" id="wb-print-btn" class="wb-btn ghost">🖨️ 列印我的錯題卷</button>
+    </div>
+    <div id="wrongbook-panel">
+      <div class="wb-panel-head"><h3>錯題複習</h3><button type="button" class="wb-close" id="wb-close-btn">收起</button></div>
+      <ol class="qs" id="wb-list"></ol>
+    </div>
+  </div>
 
   <section id="lessonqs">
     <h2 class="newpage">古文今讀 1–5 課　課文與選擇題</h2>
@@ -533,7 +583,8 @@
   var mode = 'practice', submitted = false, sent = false;
   var $ = function (id) { return document.getElementById(id); };
   var LAB = { p: '', l1: '', l2: '', l3: '', l4: '', l5: '' };
-  var ENDPOINT = 'https://noisy-thunder-4791student-scores.charyvalis.workers.dev';
+  var ENDPOINT = 'https://quiz-scores.charyvalis.workers.dev';
+  var QUIZ = '古文今讀1-5';
 
   function reveal(q) {
     var chosen = q.getAttribute('data-chosen'), ans = q.getAttribute('data-a');
@@ -620,7 +671,7 @@
     var total = sc.p + sc.l1 + sc.l2 + sc.l3 + sc.l4 + sc.l5;
     if (!ENDPOINT) { msg.textContent = '（老師尚未設定成績後台，成績沒有送出。本次得分 ' + total + '／200）'; return; }
     msg.textContent = '送出中…';
-    fetch(ENDPOINT, { method: 'POST', body: JSON.stringify({ cls: w.cls, seat: w.seat, name: w.name, mode: mode === 'test' ? '交卷' : '即時', total: total, p: sc.p, l1: sc.l1, l2: sc.l2, l3: sc.l3, l4: sc.l4, l5: sc.l5, answers: ans }) })
+    fetch(ENDPOINT, { method: 'POST', body: JSON.stringify({ quiz: QUIZ, cls: w.cls, seat: w.seat, name: w.name, mode: mode === 'test' ? '交卷' : '即時', total: total, detail: sc, answers: ans }) })
       .then(function (r) { return r.json(); })
       .then(function (j) { sent = !!(j && j.ok); msg.textContent = sent ? '✓ 成績已送出給老師（' + total + '／200）' : '送出失敗，請再按一次「交卷送出」'; })
       .catch(function () { msg.textContent = '送出失敗，請檢查網路後再按一次「交卷送出」'; });
@@ -632,7 +683,7 @@
         if (q.classList.contains('done')) return;
         if (!whoOk(true)) return;
         q.setAttribute('data-chosen', b.getAttribute('data-k'));
-        if (mode === 'practice') { reveal(q); }
+        if (mode === 'practice') { reveal(q); wbUpdate(q); }
         else {
           Array.prototype.forEach.call(q.querySelectorAll('button.opt'), function (o) { o.classList.toggle('sel', o === b); });
         }
@@ -653,12 +704,163 @@
     var left = qs.filter(function (q) { return !q.getAttribute('data-chosen'); }).length;
     if (left > 0 && !window.confirm('還有 ' + left + ' 題沒作答，確定要交卷嗎？')) return;
     submitted = true;
-    qs.forEach(function (q) { if (!q.classList.contains('done')) reveal(q); });
+    qs.forEach(function (q) { if (!q.classList.contains('done')) { reveal(q); wbUpdate(q); } });
     stats();
     var first = document.querySelector('li.q .exp.no');
     send();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ---------- 錯題本 ----------
+  var WB_KEY = 'wrongbook:' + (typeof QUIZ !== 'undefined' ? QUIZ : 'guwen');
+  var WB = {};
+  try { WB = JSON.parse(localStorage.getItem(WB_KEY) || '{}'); } catch (e) { WB = {}; }
+  var qidMap = {};
+  (function assignQids() {
+    var counters = {};
+    qs.forEach(function (q) {
+      var sec = q.getAttribute('data-sec') || 'x';
+      counters[sec] = (counters[sec] || 0) + 1;
+      var qid = sec + '-' + counters[sec];
+      q.setAttribute('data-qid', qid);
+      qidMap[qid] = q;
+    });
+  })();
+
+  function wbSave() {
+    try { localStorage.setItem(WB_KEY, JSON.stringify(WB)); } catch (e) {}
+  }
+
+  function wbUpdate(q) {
+    var qid = q.getAttribute('data-qid');
+    if (!qid) return;
+    var chosen = q.getAttribute('data-chosen'), ans = q.getAttribute('data-a');
+    if (chosen && chosen === ans) {
+      if (qid in WB) {
+        WB[qid] = (WB[qid] || 0) + 1;
+        if (WB[qid] >= 2) delete WB[qid];
+      }
+    } else {
+      WB[qid] = 0;
+    }
+    wbSave();
+    wbRenderCard();
+    wbRefreshPanelItem(qid);
+  }
+
+  function wbRenderCard() {
+    var n = Object.keys(WB).length;
+    var countEl = $('wb-count');
+    if (countEl) countEl.textContent = n;
+    var rb = $('wb-review-btn'), pb = $('wb-print-btn');
+    if (rb) rb.disabled = n === 0;
+    if (pb) pb.disabled = n === 0;
+  }
+
+  function wbBuildReviewItem(qid) {
+    var src = qidMap[qid];
+    if (!src) return null;
+    var clone = src.cloneNode(true);
+    clone.removeAttribute('data-chosen');
+    clone.classList.remove('done');
+    var exp = clone.querySelector('.exp');
+    if (exp) exp.hidden = true;
+    Array.prototype.forEach.call(clone.querySelectorAll('button.opt'), function (b) {
+      b.classList.remove('sel', 'right', 'wrong');
+      b.removeAttribute('aria-disabled');
+      var m = b.querySelector('.mark'); if (m) m.textContent = '';
+      b.addEventListener('click', function () {
+        if (clone.classList.contains('done')) return;
+        clone.setAttribute('data-chosen', b.getAttribute('data-k'));
+        reveal(clone);
+        wbUpdate(clone);
+      });
+    });
+    return clone;
+  }
+
+  function wbRefreshPanelItem(qid) {
+    var panel = $('wrongbook-panel');
+    if (!panel || !panel.classList.contains('open')) return;
+    var li = panel.querySelector('li[data-qid="' + qid + '"]');
+    if (!li) return;
+    if (!(qid in WB)) {
+      var badge = document.createElement('span');
+      badge.className = 'wb-badge'; badge.textContent = '🎉 已畢業';
+      li.querySelector('.stem').appendChild(badge);
+    } else {
+      var old = li.querySelector('.wb-streak'); if (old) old.remove();
+      var s = document.createElement('span');
+      s.className = 'wb-streak'; s.textContent = WB[qid] >= 1 ? '連續答對 1／2' : '尚未過關';
+      li.querySelector('.stem').appendChild(s);
+    }
+  }
+
+  function wbOpenPanel() {
+    var panel = $('wrongbook-panel'), list = $('wb-list');
+    list.innerHTML = '';
+    var qids = Object.keys(WB);
+    if (qids.length === 0) {
+      var p = document.createElement('p'); p.className = 'empty'; p.textContent = '目前沒有錯題，太棒了！';
+      list.appendChild(p);
+    } else {
+      qids.forEach(function (qid) {
+        var item = wbBuildReviewItem(qid);
+        if (item) { item.setAttribute('data-qid', qid); list.appendChild(item); wbRefreshPanelItem(qid); }
+      });
+    }
+    panel.classList.add('open');
+  }
+
+  function wbPrint() {
+    var qids = Object.keys(WB);
+    if (qids.length === 0) return;
+    var w = window.open('', '_blank');
+    if (!w) { window.alert('瀏覽器擋住了列印視窗，請允許彈出視窗後再試一次。'); return; }
+    var rows = qids.map(function (qid, i) {
+      var src = qidMap[qid];
+      if (!src) return '';
+      var stem = src.querySelector('.stem').cloneNode(true);
+      var badge = stem.querySelector('.wb-badge, .wb-streak'); if (badge) badge.remove();
+      var opts = Array.prototype.map.call(src.querySelectorAll('button.opt'), function (b) {
+        var lab = b.querySelector('.lab') ? b.querySelector('.lab').textContent : '';
+        var txt = b.textContent.replace(/✓|✗|正確答案/g, '').trim();
+        return '<li>' + txt + '</li>';
+      }).join('');
+      var long = Array.prototype.some.call(src.querySelectorAll('button.opt'), function (b) { return b.textContent.length > 15; });
+      return '<li class="pq"><div class="pstem">(　　)' + (i + 1) + '. ' + stem.innerHTML.replace(/<u>|<\/u>/g, '').replace(/<b>|<\/b>/g, '') + '</div>' +
+        '<ul class="popts' + (long ? ' one' : '') + '">' + opts + '</ul></li>';
+    }).join('');
+    w.document.write('<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><title>錯題複習卷</title><style>' +
+      'body{font-family:"DFKai-SB","BiauKai","標楷體","Noto Serif TC",serif;font-size:16px;line-height:1.8;margin:28px;color:#111}' +
+      'h1{font-size:1.3rem;text-align:center;margin:0 0 4px}' +
+      '.info{text-align:center;margin:0 0 18px;font-size:1rem}' +
+      'ol.plist{list-style:none;padding:0;margin:0}' +
+      'li.pq{margin:0 0 14px;break-inside:avoid}' +
+      '.pstem{margin:0 0 4px}' +
+      'ul.popts{list-style:none;margin:0 0 0 2.2em;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:1em}' +
+      'ul.popts.one{grid-template-columns:1fr}' +
+      '@media print{body{margin:14mm}}' +
+      '</style></head><body>' +
+      '<h1>古文今讀 1–5 課　錯題複習卷</h1>' +
+      '<p class="info">班級：＿＿＿＿　座號：＿＿＿＿　姓名：＿＿＿＿＿＿</p>' +
+      '<ol class="plist">' + rows + '</ol>' +
+      '</body></html>');
+    w.document.close();
+    w.onload = function () { w.focus(); w.print(); };
+    setTimeout(function () { w.focus(); w.print(); }, 300);
+  }
+
+  wbRenderCard();
+  var wbReviewBtn = $('wb-review-btn'), wbPrintBtn = $('wb-print-btn'), wbCloseBtn = $('wb-close-btn');
+  if (wbReviewBtn) wbReviewBtn.addEventListener('click', function () {
+    var panel = $('wrongbook-panel');
+    if (panel.classList.contains('open')) { panel.classList.remove('open'); }
+    else { wbOpenPanel(); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  });
+  if (wbCloseBtn) wbCloseBtn.addEventListener('click', function () { $('wrongbook-panel').classList.remove('open'); });
+  if (wbPrintBtn) wbPrintBtn.addEventListener('click', wbPrint);
+
   stats();
 })();
 </script>
